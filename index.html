@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rat Game</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+  <script src="/assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container mt-2">
+        <h1 class="gametitle">CATCH THE RAT</h1>
+        <div class="container-fluid gamecontainer">
+            <table class="table-bordered">
+                <tbody id="gameTable">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <span class="maxscore">Max Score: 
+                <span id="maxscore">0</span>
+            </span>
+            <span class="score">Score: 
+                <span id="score">0</span>
+            </span>
+        </div>  
+    </div>
+
+    <script>
+        const ratImageSrc = '/assets/img/rat.png';
+        const table = document.getElementById("gameTable");
+        let score = 0;
+        let click = 0;
+        let maxscore = 0;
+        let gameInterval;
+        
+        function getRandomCell() {
+            const rows = table.rows;
+            const randomRow = Math.floor(Math.random() * rows.length);
+            const cells = rows[randomRow].cells;
+            const randomCell = Math.floor(Math.random() * cells.length);
+            return cells[randomCell];
+        }
+    
+        function placeRat() {
+            //xóa chuột hiện tại (nếu có)
+            const currentRat = document.querySelector('.rat');
+            if (currentRat) {
+                currentRat.parentElement.innerHTML = ''; 
+            }
+
+            const cell = getRandomCell();
+            const img = document.createElement("img");
+            img.src = ratImageSrc;
+            img.classList.add('rat');
+            cell.appendChild(img);
+            
+            img.addEventListener('click', function() {
+                score++; 
+                document.getElementById('score').textContent = score; 
+            });
+        }
+
+        function startGame() {
+            score = 0;
+            click = 0;
+            document.getElementById('score').textContent = score;
+            gameInterval = setInterval(placeRat, 1000);
+        }
+    
+        function handleMiss() {
+            click++;
+            if (click >= 3) {
+                clearInterval(gameInterval);
+                if (score > maxscore) {
+                    maxscore = score;
+                    document.getElementById('maxscore').textContent = maxscore;
+                }
+ 
+                const playAgain = confirm("Bạn đã thua! Bạn có muốn chơi lại không?");
+                if (playAgain) {
+                    startGame(); 
+                } 
+                else {
+                    alert("Cảm ơn bạn đã chơi!");
+                }
+            }
+        }
+    
+        table.addEventListener('click', function(event) {
+            if (!event.target.classList.contains('rat')) {
+                handleMiss();
+            }
+        });
+
+        window.onload = function() {
+            startGame();
+        };
+    </script>
+</body>
+</html>

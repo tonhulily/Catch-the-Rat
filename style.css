@@ -1,0 +1,42 @@
+.container {
+  align-items: center;
+}
+
+.rat {
+  width: 100%;
+  text-align: center;
+}
+
+.gametitle {
+  font-size: 15px;
+  text-align: center; 
+}
+
+.gamecontainer {
+  display: flex;
+  cursor: url('/assets/img/hammer.png'),auto;
+  pointer-events: all;
+}
+
+.maxscore {
+  position: absolute;
+  top: 10%;
+  right: 30px;
+}
+
+.score {
+  position: absolute;
+  top: 20%;
+  right: 30px;
+}
+
+.table-bordered {
+  margin: auto;
+}
+
+.table-bordered td {
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  vertical-align: middle;
+}
